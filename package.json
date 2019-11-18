@@ -1,6 +1,6 @@
 {
   "name": "ts-react-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quick setup typescript react live reload server",
   "main": "index.js",
   "scripts": {
