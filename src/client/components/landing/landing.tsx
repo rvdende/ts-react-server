@@ -1,10 +1,11 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 interface Props { }
 
 interface State { }
 
-export class Example extends React.Component<Props, State> {
+export class Landing extends React.Component<Props, State> {
     state = {}
 
     static getDerivedStateFromProps(props: Props, state: State) {
@@ -14,8 +15,8 @@ export class Example extends React.Component<Props, State> {
     render() {
         return (
             <div style={{ padding: 20, border: "1px solid blue" }}>
-                Example component
-            </div>
+                Landing page.
+                Please <Link to="/login">login</Link> or <Link to="/register">register</Link>.</div>
         )
     }
 

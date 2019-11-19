@@ -4,7 +4,7 @@ interface Props { }
 
 interface State { }
 
-export class Example extends React.Component<Props, State> {
+export class ErrorDisplay extends React.Component<Props, State> {
     state = {}
 
     static getDerivedStateFromProps(props: Props, state: State) {
@@ -14,7 +14,7 @@ export class Example extends React.Component<Props, State> {
     render() {
         return (
             <div style={{ padding: 20, border: "1px solid blue" }}>
-                Example component
+                404 not found
             </div>
         )
     }
