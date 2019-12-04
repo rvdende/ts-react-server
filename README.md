@@ -1,29 +1,25 @@
 
 # Usage:
 
-Install dependencies:
+Clone repo:
 ```
-npm install
-```
-
-Run both build watchers (client + server) in seperate terminals
-
-```
-npm run watchserver
-```
-```
-npm run watchclient
+git clone https://github.com/rvdende/ts-react-server.git
 ```
 
-Start the server locally ( http://localhost:8080/ ) using nodemon. It will automatically restart the webserver on changes. Browser will also auto reload on code changes.
+```
+cd ts-react-server
+npm run dev
+```
 
-```
-npm run start
-```
+Open your browser locally at http://localhost:8080/ . It will automatically restart the webserver on changes. Browser will also auto reload on code changes.
+
+To get started edit this file at /src/client/client.tsx. <br />
+You should see this update in the browser when you save the file!
 
 ---
 
 ### Changelog:
 ```
+Dev 4   Simplified first steps
 Nov 18  Opensource
 ```

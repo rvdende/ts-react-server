@@ -31,6 +31,14 @@ export class App extends Component<Props, State> {
         return (
             <div>
                 <BrowserRouter>
+                    <div style={{ padding: 50 }}>
+                        <h1>Hello world.</h1>
+                        <p>To get started you can edit this file at /src/client/client.tsx. <br />
+                            You should see this update in the browser when you save the file!</p>
+
+                        For more info go to: <i className="fab fa-github"></i> <a href="https://github.com/rvdende/ts-react-server">https://github.com/rvdende/ts-react-server</a>
+                    </div>
+
                     <Editable />
                     <NavBar />
                     <Switch>
