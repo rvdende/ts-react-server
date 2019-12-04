@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon build/server/main.js",
+    "dev": "npm install && npm run buildserver && npm run buildclientdev && npm run watch\"",
+    "watch": "concurrently --kill-others \"npm run watchserver\" \"npm run watchclient\" \"npm run start\"",
     "watchserver": "tsc --sourcemap --w --lib es2015 ./src/server/main.ts --outDir ./build",
+    "buildserver": "tsc --sourcemap --lib es2015 ./src/server/main.ts --outDir ./build",
     "watchclient": "webpack --env dev -w --mode development --entry ./src/client/client.tsx --output ./public/bundle.js",
+    "buildclientdev": "webpack --env dev --mode development --entry ./src/client/client.tsx --output ./public/bundle.js",
     "watchclientprod": "webpack --env prod -w --mode production --entry ./src/client/client.tsx --output ./public/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -51,5 +55,8 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "ws": "^7.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
   }
 }

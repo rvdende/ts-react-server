@@ -11,6 +11,8 @@ import { ErrorDisplay } from "./components/error/error";
 import { Register } from "./components/register/register";
 import { Login } from "./components/login/login";
 
+import { Editable } from "./components/editable/editable"
+
 interface Props { }
 interface State { }
 
@@ -29,6 +31,7 @@ export class App extends Component<Props, State> {
         return (
             <div>
                 <BrowserRouter>
+                    <Editable />
                     <NavBar />
                     <Switch>
                         <Route exact path="/" component={Landing} />

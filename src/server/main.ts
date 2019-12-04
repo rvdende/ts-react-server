@@ -24,4 +24,4 @@ var serverhttp = http.createServer(app);
 // used for live update
 var wss = new SocketServer(serverhttp);
 
-serverhttp.listen(port, () => console.log(`Example app listening on port ${port}!`))
+serverhttp.listen(port, () => console.log(`Prototype 2.0 listening on port ${port}!`))
