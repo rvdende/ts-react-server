@@ -18,8 +18,17 @@ You should see this update in the browser when you save the file!
 
 ---
 
+# Styleguidist
+
+```
+npm run styleguide
+```
+
+Open browser at http://localhost:6060/ and see https://react-styleguidist.js.org for more information.
+
 ### Changelog:
 ```
-Dev 4   Simplified first steps
+Dec 11  Added react-styleguidist 
+Dec 4   Simplified first steps
 Nov 18  Opensource
 ```
