@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface Props { }
+interface Props { pizza?: string }
 
 interface State { }
 
@@ -15,6 +15,7 @@ export class Example extends React.Component<Props, State> {
         return (
             <div style={{ padding: 20, border: "1px solid blue" }}>
                 Example component
+                {(this.props.pizza) && <span>{this.props.pizza}</span>}
             </div>
         )
     }

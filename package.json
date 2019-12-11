@@ -1,6 +1,6 @@
 {
   "name": "ts-react-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Quick setup typescript react live reload server",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,9 @@
     "watchclient": "webpack --env dev -w --mode development --entry ./src/client/client.tsx --output ./public/bundle.js",
     "buildclientdev": "webpack --env dev --mode development --entry ./src/client/client.tsx --output ./public/bundle.js",
     "watchclientprod": "webpack --env prod -w --mode production --entry ./src/client/client.tsx --output ./public/bundle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
   },
   "keywords": [
     "typescript",
@@ -40,6 +42,7 @@
     "@types/react-router-dom": "^5.1.2",
     "@types/styled-components": "^4.4.0",
     "@types/ws": "^6.0.3",
+    "css-loader": "^3.3.0",
     "express": "^4.17.1",
     "extra-watch-webpack-plugin": "^1.0.3",
     "isomorphic-ws": "^4.0.1",
@@ -48,6 +51,7 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
+    "style-loader": "^1.0.1",
     "styled-components": "^4.4.1",
     "ts-loader": "^6.2.1",
     "ts-react-grid": "^1.0.3",
@@ -57,6 +61,7 @@
     "ws": "^7.2.0"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "react-styleguidist": "^10.3.0"
   }
 }
