@@ -16,6 +16,7 @@ export class SocketServer extends EventEmitter {
 
         this.wss.on('connection', (socket: any) => {
             console.log("ws connected")
+
         });
     }
 }

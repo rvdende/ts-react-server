@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { api } from "../../api";
 
 interface Props { }
 
@@ -16,6 +17,10 @@ export class NavBar extends React.Component<Props, State> {
         return (
             <div style={{ padding: 20, border: "1px solid blue" }}>
                 LOGO <Link to="/">home</Link>
+
+                <button onClick={(e) => {
+                    api.test();
+                }} > TEST </button>
             </div>
         )
     }

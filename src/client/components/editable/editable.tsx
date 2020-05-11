@@ -6,6 +6,8 @@ interface Props { }
 
 interface State { }
 
+
+
 export class Editable extends React.Component<Props, State> {
     state = {
         /** show editable to the user? */

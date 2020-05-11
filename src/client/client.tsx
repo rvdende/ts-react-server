@@ -13,6 +13,8 @@ import { Login } from "./components/login/login";
 
 import { Editable } from "./components/editable/editable"
 
+import { api } from './api'
+
 interface Props { }
 interface State { }
 
@@ -25,6 +27,9 @@ export class App extends Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.ws = new SocketClient({ livereload: true });
+
+        api.test();
+
     }
 
     render() {
@@ -33,6 +38,7 @@ export class App extends Component<Props, State> {
                 <BrowserRouter>
                     <div style={{ padding: 50 }}>
                         <h1>Hello world.</h1>
+                        <h2>TEJKLSAMLKSDA     123123123</h2>
                         <p>To get started you can edit this file at /src/client/client.tsx. <br />
                             You should see this update in the browser when you save the file!</p>
 

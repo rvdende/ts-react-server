@@ -10,9 +10,12 @@ var expressapp: any = express;
 const app: express.Application = expressapp();
 const port = 8080
 
+// app.get('/', (req, res) => res.send('Hello World!'))
+
 app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use(express.static(path.resolve(__dirname, '../../build/client')))
-//app.get('/', (req, res) => res.send('Hello World!'))
+
+
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
