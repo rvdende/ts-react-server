@@ -42,6 +42,10 @@ export class App extends Component<Props, State> {
                         <p>To get started you can edit this file at /src/client/client.tsx. <br />
                             You should see this update in the browser when you save the file!</p>
 
+                        <button onClick={(e) => {
+                            api.emit('notification', api.account)
+                        }} >TEST NOTIFICATION</button>
+
                         For more info go to: <i className="fab fa-github"></i> <a href="https://github.com/rvdende/ts-react-server">https://github.com/rvdende/ts-react-server</a>
                     </div>
 

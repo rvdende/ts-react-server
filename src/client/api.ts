@@ -8,6 +8,10 @@ const WRAP = styled.div`
 class API extends EventEmitter {
     constructor() {
         super();
+
+        this.on('notification', (msg) => {
+            console.log(msg)
+        })
     }
 
     account: User = {
@@ -32,10 +36,6 @@ const apiinstance = new API()
 const globalAny: any = global;
 globalAny.api = apiinstance
 export const api = apiinstance
-
-
-
-
 
 interface User {
     naam: string
