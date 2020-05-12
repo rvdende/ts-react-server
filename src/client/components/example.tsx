@@ -1,8 +1,16 @@
 import * as React from "react";
+import styled, { css } from 'styled-components'
 
-interface Props { pizza?: string }
+interface Props { somevalue?: string }
 
 interface State { }
+
+/* background: ${({ theme }) => theme.bgSpot}; */
+const StyledDiv = styled.div`    
+    padding: 15px;
+    margin: 20px;
+    border-radius: 25px;
+`;
 
 export class Example extends React.Component<Props, State> {
     state = {}
@@ -13,8 +21,11 @@ export class Example extends React.Component<Props, State> {
 
     render() {
         return (
-            <div style={{ padding: 15, margin: 20, height: 50, background: 'rgba(25,75,125,0.5)', borderRadius: 100 }}>
-                Example pizza: {(this.props.pizza) && <span>{this.props.pizza}</span>}
+            <div>
+                <StyledDiv>
+                    Styled component
+                    Example {(this.props.somevalue) && <span>{this.props.somevalue}</span>}
+                </StyledDiv>
             </div>
         )
     }

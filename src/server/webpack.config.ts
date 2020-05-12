@@ -14,6 +14,7 @@ export const webpackConfig = {
         filename: 'bundle.js',
     },
     resolve: {
+        modules: ['node_modules'],
         alias: {
             'react-dom': '@hot-loader/react-dom',
         },

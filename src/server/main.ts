@@ -30,6 +30,6 @@ app.get('*', (req, res) => {
 var serverhttp = http.createServer(app);
 
 // used for live update
-var wss = new SocketServer(serverhttp);
+// var wss = new SocketServer(serverhttp);
 
 serverhttp.listen(port, () => console.log(`ts-react-server listening on port http://localhost:${port}/ !`))
