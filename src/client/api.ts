@@ -4,20 +4,20 @@ const WebSocket = require('isomorphic-ws')
 
 class API extends EventEmitter {
 
-    //ws: WebSocket;
+    ws: WebSocket;
 
     constructor() {
         super();
-        //this.ws = new WebSocket(location.origin.replace("http", "ws"));
+        this.ws = new WebSocket(location.origin.replace("http", "ws"));
 
-        // this.ws.onmessage = (event) => {
-        //     console.log('message recv', event.data)
-        //     this.emit('socket', event.data)
-        // }
+        this.ws.onmessage = (event) => {
+            console.log('message recv', event.data)
+            this.emit('socket', event.data)
+        }
 
         this.on('notification', (msg) => {
             console.log('api.ts test event', msg)
-            // this.ws.send(JSON.stringify(msg));
+            this.ws.send(JSON.stringify(msg));
         })
 
 

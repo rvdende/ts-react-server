@@ -22,9 +22,15 @@ class App extends React.Component<Props, State> {
 
     componentDidMount() {
         this.interval = window.setInterval(
-            () => this.setState(prevState => ({ counter: prevState.counter - 1 })),
+            () => this.setState(prevState => ({ counter: prevState.counter + 1 })),
             200,
         )
+        api.test();
+
+        api.on('socket', (data) => {
+            console.log(data);
+            this.setState({ message: data })
+        })
     }
 
     generateString1() {
@@ -51,7 +57,7 @@ class App extends React.Component<Props, State> {
                         </div>
                         <Switch>
                             <Route exact path="/">
-                                <h1>Hello World!2345521</h1>
+                                <h1>Hello World!123 {this.generateString1()}</h1>
                                 <p>To get started you can edit this file at /src/client/App.tsx. <br />
                             You should see this update in the browser when you save the file!</p>
 
@@ -79,7 +85,7 @@ class App extends React.Component<Props, State> {
                                 <div>
                                     <input type='text' value={this.state.inputmessage} onChange={(e) => { this.setState({ inputmessage: e.target.value }) }} />
                                     <button onClick={(e) => {
-                                        // api.ws.send(this.state.inputmessage); 
+                                        api.ws.send(this.state.inputmessage);
                                     }} >SEND </button>
                                 </div>
 
