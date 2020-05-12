@@ -8,15 +8,37 @@ import * as https from "https";
 
 
 export class SocketServer extends EventEmitter {
-    wss: ws.Server;
-
+    ws: ws.Server;
+    sockets: WebSocket[] | any = [];
     constructor(server: http.Server | https.Server) {
         super();
-        this.wss = new ws.Server({ server });
+        this.ws = new ws.Server({ server });
 
-        this.wss.on('connection', (socket: any) => {
-            console.log("ws connected")
+        console.log('=== STARTING WS SERVER')
+
+        this.ws.on('connection', (socket) => {
+            socket.send('hello');
+
+            console.log("ws connected");
+            this.sockets.push(socket);
+
+            socket.onmessage = (event) => {
+                console.log(event.data);
+
+                for (var s of this.sockets) {
+                    let Sock: WebSocket = s;
+                    try {
+                        Sock.send(event.data.toString());
+                    } catch (err) {
+
+                    }
+
+                }
+
+            }
 
         });
+
+
     }
 }

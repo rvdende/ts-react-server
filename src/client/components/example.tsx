@@ -13,9 +13,8 @@ export class Example extends React.Component<Props, State> {
 
     render() {
         return (
-            <div style={{ padding: 20, border: "1px solid blue" }}>
-                Example component
-                {(this.props.pizza) && <span>{this.props.pizza}</span>}
+            <div style={{ padding: 15, margin: 20, height: 50, background: 'rgba(25,75,125,0.5)', borderRadius: 100 }}>
+                Example pizza: {(this.props.pizza) && <span>{this.props.pizza}</span>}
             </div>
         )
     }

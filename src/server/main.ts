@@ -1,9 +1,11 @@
 import * as express from "express"
-import { User } from "../shared/interfaces"
 import * as path from "path"
 import * as http from "http"
 import { SocketServer } from "./socket";
-import { fstat } from "fs";
+import { webpackConfig } from './webpack.config'
+
+const webpack = require('webpack');
+const middleware = require('webpack-dev-middleware');
 
 var expressapp: any = express;
 
@@ -15,7 +17,10 @@ const port = 8080
 app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use(express.static(path.resolve(__dirname, '../../build/client')))
 
+const compiler = webpack(webpackConfig);
 
+app.use(middleware(compiler, {}));
+app.use(require("webpack-hot-middleware")(compiler));
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
