@@ -10,6 +10,12 @@ class API extends EventEmitter {
         super();
         this.ws = new WebSocket(location.origin.replace("http", "ws"));
 
+        // 
+
+        this.ws.onopen = () => {
+            this.ws.send(JSON.stringify({ userconnected: 'hello' }))
+        }
+
         this.ws.onmessage = (event) => {
             console.log('message recv', event.data)
             this.emit('socket', event.data)
