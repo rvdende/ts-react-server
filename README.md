@@ -18,22 +18,10 @@ npm install
 
 Then in 3 seperate terminals run:
 
-Build the server
+Build and run the dev server
 ```
-npm run watchserver
+npm run dev
 ```
-
-Build the react client
-```
-npm run watchclient
-```
-
-Start the server:
-```
-npm run start
-```
-
-
 
 Open your browser locally at http://localhost:8080/ . It will automatically restart the webserver on changes. Browser will also auto reload on code changes.
 
@@ -42,21 +30,3 @@ You should see this update in the browser when you save the file!
 
 ---
 
-
-See below if you really want to use styleguidist.. i dont use actually.
-
-
-# Styleguidist
-
-```
-npm run styleguide
-```
-
-Open browser at http://localhost:6060/ and see https://react-styleguidist.js.org for more information.
-
-### Changelog:
-```
-Dec 11  Added react-styleguidist 
-Dec 4   Simplified first steps
-Nov 18  Opensource
-```

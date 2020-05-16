@@ -1,10 +1,14 @@
 import { EventEmitter } from "events";
+import { dashboardService } from "./components/dashboard/dashboardService";
+import { themeList } from "./theme";
 
 const WebSocket = require('isomorphic-ws')
 
 class API extends EventEmitter {
 
     ws: WebSocket;
+
+    themes = themeList;
 
     constructor() {
         super();
@@ -26,10 +30,18 @@ class API extends EventEmitter {
             this.ws.send(JSON.stringify(msg));
         })
 
-
     }
 
-
+    loadThemes(
+        cb: (theme: any) => void
+    ) {
+        dashboardService.statefind({ query: { key: 'themes' } }, (result) => {
+            if (result.isSuccessful) {
+                this.themes = result.data[0].themes;
+                cb(this.themes)
+            }
+        }, (err) => { })
+    }
 
     account: User = {
         naam: 'asdsad',
