@@ -12,6 +12,7 @@ export default class WidgetSimple extends WidgetComponent {
     state: WidgetState = {
         options: {
             someval: { type: 'input', default: 'foo', value: undefined },
+            textcol: { type: 'color', default: 'foo', value: undefined }
         },
         count: 0
     }
@@ -30,7 +31,7 @@ export default class WidgetSimple extends WidgetComponent {
 
     render() {
         return (
-            <WidgetBasicWrap>
+            <WidgetBasicWrap style={{ color: this.state.options.textcol.value }}>
                 {this.state.options.someval.value}<br />
                 {this.state.count}
             </WidgetBasicWrap>

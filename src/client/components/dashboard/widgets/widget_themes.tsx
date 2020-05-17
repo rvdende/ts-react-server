@@ -9,7 +9,7 @@ import { Select } from '../select';
 import { Checkbox } from '../checkbox';
 import { InputColor } from '../input_color';
 import { Input } from '../input';
-import { clone } from '../dashboard';
+import { clone, generateDifficult } from '../dashboard';
 
 //test
 import { SketchPicker } from 'react-color';
@@ -135,51 +135,69 @@ export default class WidgetThemes extends WidgetComponent {
         this.getThemeList();
     }
 
-    getThemeList = () => {
+    getThemeList = (cb?: any) => {
         dashboardService.statefind({ query: { key: 'themes' } }, (result) => {
             console.log('getThemeList', result);
+            let mainTheme = (result.data[0].mainTheme) ? result.data[0].mainTheme : result.data[0].themes[0];
+            let darkTheme = (result.data[0].darkTheme) ? result.data[0].darkTheme : result.data[0].themes[1];
+            let useDarkTheme = (result.data[0].useDarkTheme) ? result.data[0].useDarkTheme : false;
             this.setState({
                 themes: result.data[0].themes,
-                mainTheme: result.data[0].themes[0],
-                darkTheme: result.data[0].themes[1]
-            })
+                mainTheme,
+                darkTheme,
+                useDarkTheme
+            }, () => { if (cb) { cb(); } })
         }, (error) => {
 
         })
     }
 
     createNewTheme = () => {
+        this.state.selectedTheme.id = generateDifficult(32);
         dashboardService.stateupdate({ query: { key: 'themes' }, update: { $push: { themes: this.state.selectedTheme } } },
             (result) => {
-
+                this.getThemeList();
             },
             (error) => {
 
             });
     }
 
+    deleteTheme = () => {
+        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $pull: { themes: this.state.selectedTheme } } },
+            (s) => {
+
+                this.getThemeList(() => {
+                    this.setState({ selectedTheme: this.state.themes[0] })
+                    api.emit('theme', this.state.themes[0])
+                });
+
+            },
+            (e) => { })
+    }
+
     setMainTheme = (mainTheme: ThemeDefinition) => {
         this.setState({ mainTheme });
         api.emit('theme', mainTheme);
+        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $set: { mainTheme } } })
     }
 
     setDarkTheme = (darkTheme: ThemeDefinition) => {
         this.setState({ darkTheme })
         api.emit('theme', darkTheme);
+        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $set: { darkTheme } } })
+    }
+
+    toggleUseDarkTheme = () => {
+        let useDarkTheme = !this.state.useDarkTheme;
+        this.setState({ useDarkTheme });
+        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $set: { useDarkTheme } } })
     }
 
     render() {
         return (
             <WidgetBasicWrap>
-                <h1>Theme Library</h1>
-
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Button icon='fas fa-redo' onClick={this.getThemeList} />
-
-                </div>
-
-                <h2>Branding</h2>
-
+                <h1>Themes</h1>
                 <OptionBox style={{ border: 'none' }}>
                     <div style={{
                         padding: 7,
@@ -206,9 +224,7 @@ export default class WidgetThemes extends WidgetComponent {
                 <OptionBox>
                     <div style={{ width: 150 }}>
                         <div style={{ float: 'left', paddingTop: 7 }}>
-                            <Checkbox checked={this.state.useDarkTheme} onChange={(e) => {
-                                this.setState({ useDarkTheme: !this.state.useDarkTheme })
-                            }} />
+                            <Checkbox checked={this.state.useDarkTheme} onChange={this.toggleUseDarkTheme} />
                         </div>
                         <div style={{ float: "right", paddingTop: 9, paddingRight: 15, opacity: this.state.useDarkTheme ? 1 : 0.25 }}>Dark theme:</div>
                     </div>
@@ -247,14 +263,15 @@ export default class WidgetThemes extends WidgetComponent {
                                 this.setState({ selectedTheme })
                                 api.emit('theme', selectedTheme)
                             }} >
-                            <option key='none' value={undefined}>select</option>
+                            <option key='none' value={' '}>select</option>
                             {(this.state.themes).map((r: ThemeDefinition, index: string) => {
                                 return <option value={JSON.stringify(r)} key={index}>{r.name}</option>
                             })}</Select>
                     </div>
-                    <div style={{ paddingLeft: 10 }}>
-                        <Button icon='fas fa-save' onClick={this.createNewTheme} text='SAVE' />
-                    </div>
+
+                    <Button icon='fas fa-save' onClick={this.createNewTheme} style={{ marginLeft: 10, marginRight: 10 }} />
+
+                    <Button icon='fas fa-times' onClick={this.deleteTheme} />
                 </OptionBox>
 
                 <OptionBox style={{ marginTop: 15, display: 'default' }} >
@@ -276,9 +293,6 @@ export default class WidgetThemes extends WidgetComponent {
         );
     }
 };
-
-
-
 
 class ThemeConfigurator extends React.Component<{ onChange?: (e?: any) => void, theme: ThemeDefinition | any }, { theme: ThemeDefinition }> {
     state: {
@@ -325,8 +339,6 @@ class ThemeConfigurator extends React.Component<{ onChange?: (e?: any) => void, 
                     </div>
                 </div>
             })}
-
-
         </div>
     }
 }
