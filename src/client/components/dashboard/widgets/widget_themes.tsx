@@ -11,6 +11,8 @@ import { InputColor } from '../input_color';
 import { Input } from '../input';
 import { clone } from '../dashboard';
 
+//test
+import { SketchPicker } from 'react-color';
 
 interface BasicWrapProps {
     link?: boolean;
@@ -269,6 +271,7 @@ export default class WidgetThemes extends WidgetComponent {
                         api.emit('theme', theme);
                     }} />
                     }</OptionBox>
+
             </WidgetBasicWrap>
         );
     }
@@ -322,6 +325,7 @@ class ThemeConfigurator extends React.Component<{ onChange?: (e?: any) => void, 
                     </div>
                 </div>
             })}
+
 
         </div>
     }
