@@ -41,4 +41,17 @@ export class SocketServer extends EventEmitter {
 
 
     }
+
+
+    send(data: string) {
+        for (var s of this.sockets) {
+            let Sock: WebSocket = s;
+            try {
+                Sock.send(data);
+            } catch (err) {
+
+            }
+
+        }
+    }
 }

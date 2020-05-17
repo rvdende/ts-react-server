@@ -3,13 +3,12 @@ import { WidgetComponent, WidgetState } from './widgetcomponent'
 import styled from 'styled-components';
 
 
-const WidgetBasicWrap = styled.div`
-    text-align: center;
-    height: 100%;
-    color: ${({ theme }) => theme.text};
+const Terminal = styled.pre`
+    color: ${({ theme }) => theme.brandSpot};
+    background: ${({ theme }) => theme.bodyAlt};
 `;
 
-export default class WidgetSimple extends WidgetComponent {
+export default class WidgetJSON extends WidgetComponent {
     state: WidgetState = {
         options: {
             someval: { type: 'input', default: 'foo', value: undefined },
@@ -32,10 +31,9 @@ export default class WidgetSimple extends WidgetComponent {
 
     render() {
         return (
-            <WidgetBasicWrap style={{ color: this.state.options.textcol.value }}>
-                {this.state.options.someval.value}<br />
-                {this.state.count}
-            </WidgetBasicWrap>
+            <Terminal>
+                {JSON.stringify(this.props, null, 2)}
+            </Terminal>
         );
     }
 };

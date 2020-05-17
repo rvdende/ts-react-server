@@ -210,7 +210,7 @@ class Widget extends React.Component<MyProps, WidgetState> {
                     </WidgetContent>
                     : <WidgetContent>
                         {(WidgetToDraw !== undefined)
-                            ? <div style={{ height: '100%' }}><WidgetToDraw
+                            ? <div style={{ height: '100%', overflow: 'auto' }}><WidgetToDraw
                                 widget={this.props.widget}
                                 state={this.props.state}
                                 value={value}

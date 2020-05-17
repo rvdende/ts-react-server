@@ -7,6 +7,7 @@ import { readFile, writeFile } from 'fs';
 
 import express = require('express')
 import mongojs = require('mongojs')
+import { AnimationObjectGroup } from "three";
 
 const webpack = require('webpack');
 const middleware = require('webpack-dev-middleware');
@@ -42,6 +43,11 @@ function startServer(db: mongojs.db) {
     app.use(middleware(compiler, {}));
     app.use(require("webpack-hot-middleware")(compiler));
     app.use(express.json({ limit: '10mb' }));
+
+    app.post('/nodeapi/prototype/data/post', (req, res) => {
+        wss.send(JSON.stringify(req.body));
+        res.json({ result: 'success' })
+    })
 
     app.post('/nodeapi/prototype/state/:key', (req, res) => {
         db.states.findOne({ key: req.params.key }, (err, state) => {
