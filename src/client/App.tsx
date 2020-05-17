@@ -50,7 +50,7 @@ class App extends React.Component<Props, State> {
         })
 
         api.loadThemes((themes) => {
-            this.setState({ theme: themes[0] })
+            this.setState({ theme: themes.mainTheme })
         })
 
         api.on('theme', (theme) => {

@@ -152,9 +152,31 @@ export default class WidgetThemes extends WidgetComponent {
         })
     }
 
-    createNewTheme = () => {
-        this.state.selectedTheme.id = generateDifficult(32);
-        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $push: { themes: this.state.selectedTheme } } },
+    newTheme = () => {
+        let newTheme;
+        if (this.state.selectedTheme) {
+            newTheme = clone(this.state.selectedTheme);
+        } else {
+            newTheme = clone(this.state.mainTheme);
+        }
+
+        newTheme.id = generateDifficult(32);
+        newTheme.name = 'Untitled Theme'
+        this.setState({ selectedTheme: newTheme })
+        dashboardService.stateupdate({ query: { key: 'themes' }, update: { $push: { themes: newTheme } } },
+            (result) => {
+                this.getThemeList();
+            },
+            (error) => {
+
+            });
+    }
+
+    saveTheme = () => {
+        dashboardService.stateupdate({
+            query: { key: 'themes', 'themes.id': this.state.selectedTheme.id },
+            update: { $set: { 'themes.$': this.state.selectedTheme } }
+        },
             (result) => {
                 this.getThemeList();
             },
@@ -269,9 +291,9 @@ export default class WidgetThemes extends WidgetComponent {
                             })}</Select>
                     </div>
 
-                    <Button icon='fas fa-save' onClick={this.createNewTheme} style={{ marginLeft: 10, marginRight: 10 }} />
-
-                    <Button icon='fas fa-times' onClick={this.deleteTheme} />
+                    <Button icon='fas fa-save' onClick={this.saveTheme} style={{ marginLeft: 5 }} />
+                    <Button icon='fas fa-times' onClick={this.deleteTheme} style={{ marginLeft: 5 }} />
+                    <Button icon='fas fa-plus' onClick={this.newTheme} style={{ marginLeft: 5 }} />
                 </OptionBox>
 
                 <OptionBox style={{ marginTop: 15, display: 'default' }} >
@@ -306,7 +328,7 @@ class ThemeConfigurator extends React.Component<{ onChange?: (e?: any) => void, 
                 let width = 300;
                 if (prop.type === 'color') { width = 100 }
                 if (prop.type === 'px') { width = 120 }
-                return <div style={{ width, padding: 10, float: 'left' }}>
+                return <div key={index} style={{ width, padding: 10, float: 'left' }}>
                     <div style={{ width: 200, fontSize: 12, paddingBottom: 5 }}>{prop.name}:</div>
                     <div>
                         {(prop.type === 'string') && <Input style={{ width: '100%' }}

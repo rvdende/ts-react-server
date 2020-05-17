@@ -38,7 +38,10 @@ class API extends EventEmitter {
         dashboardService.statefind({ query: { key: 'themes' } }, (result) => {
             if (result.isSuccessful) {
                 this.themes = result.data[0].themes;
-                cb(this.themes)
+                // if (result.data[0].mainTheme) {
+                //     this.emit('theme', result.data[0].mainTheme);
+                // }
+                cb(result.data[0])
             }
         }, (err) => { })
     }
