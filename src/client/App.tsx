@@ -71,49 +71,12 @@ class App extends React.Component<Props, State> {
                     <ThemeProvider theme={this.state.theme}>
                         <GlobalStyles />
                         <BrowserRouter>
-                            <div>
-                                <Link to='/'>Home</Link> | <Link to='/test'>Test</Link> | <Link to='/about'>About</Link>
-                            </div>
-
                             <Dashboard state={this.state.dashboardState} editMode={true} />
 
                             <Switch>
                                 <Route exact path="/">
-                                    <h1>Hello World!</h1>
-                                    <p>To get started you can edit this file at /src/client/App.tsx. <br />
-                            You should see this update in the browser when you save the file!</p>
-
-
                                     <div>
-                                        Font awesome support:
-
-                                    <i className='fas fa-times' />
-                                    </div>
-
-                                    <p>You can open another window and send messages between browsers.</p>
-
-
-
-                                    <div>
-                                        <input type='text' value={this.state.inputmessage} onChange={(e) => { this.setState({ inputmessage: e.target.value }) }} />
-                                        <button onClick={(e) => {
-                                            api.ws.send(this.state.inputmessage);
-                                        }} >SEND </button>
-                                    </div>
-
-                                    <div style={{ background: '#454545', color: 'lime', padding: 10 }}>
-                                        this.state.counter = {this.state.counter}<br />
-                                this.state.message = {this.state.message}
-                                    </div>
-
-                                    <div>
-                                        <button onClick={(e) => {
-                                            api.emit('notification', { test: 'foo' })
-                                        }} >TEST NOTIFICATION</button>
-                                    </div>
-
-                                    <div>
-                                        For more info go to: <i className="fab fa-github"></i> <a href="https://github.com/rvdende/ts-react-server">https://github.com/rvdende/ts-react-server</a>
+                                        home
                                     </div>
                                 </Route>
                                 <Route exact path="/test">
