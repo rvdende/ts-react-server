@@ -11,8 +11,6 @@ import { InputColor } from '../input_color';
 import { Input } from '../input';
 import { clone, generateDifficult } from '../dashboard';
 
-//test
-import { SketchPicker } from 'react-color';
 
 interface BasicWrapProps {
     link?: boolean;
@@ -20,7 +18,7 @@ interface BasicWrapProps {
 
 const WidgetBasicWrap = styled.div<BasicWrapProps>`
     height: 100%;
-    padding: 20px;
+    padding: ${({ theme }) => theme.padding};
     h1 {
         font-size: 28px;
         font-weight: bold;
@@ -37,79 +35,6 @@ const WidgetBasicWrap = styled.div<BasicWrapProps>`
 
 `;
 
-const DataDisplay = styled.div`
-    /* Internet Explorer 10 */
-    display: -ms-flexbox;
-    -ms-flex-pack: center;
-    -ms-flex-align: center;
-
-    /* Firefox */
-    display: -moz-box;
-    -moz-box-pack: center;
-    -moz-box-align: center;
-
-    /* Safari, Opera, and Chrome */
-    display: -webkit-box;
-    -webkit-box-pack: center;
-    -webkit-box-align: center;
-
-    /* W3C */
-    display: box;
-    box-pack: center;
-    box-align: center;
-
-    height: 100%;
-`;
-
-const WidgetHeading = styled.div`
-color:  ${({ theme }) => theme.focusColor};
-    top: 0;
-    position: absolute;
-    left: 0;
-    right :0;
-    font-size: 10px;
-    opacity: 0.7;
-    padding-top: 5px;
-    text-transform: uppercase;
-    `;
-
-const WidgetFooter = styled.div`
-    bottom: 0;
-    position: absolute;
-    left: 0;
-    right :0;
-    font-size: 10px;
-    padding-bottom: 5px;
-    text-transform: uppercase;
-`;
-
-const WidgetUnit = styled.div`
-    bottom: 0;
-    position: absolute;
-    left: 0;
-    right :0;
-    font-size: 10px;
-    opacity: 0.7;
-    padding-bottom: 20px;
-    text-transform: uppercase;
-`;
-
-const ThemeBox = styled.div`
-    float:left;
-    border: 1px solid gray;
-    margin: 10px;
-    padding: 5px;
-`;
-
-const ThemeColorBar = styled.div`
-    width: 25px;
-    height: 75px;
-`;
-
-const ThemeColorBarBox = styled.div`
-   display: flex;
-    flex: row;
-`;
 
 
 const OptionBox = styled.div`
@@ -118,6 +43,12 @@ const OptionBox = styled.div`
    display: flex;
    flex-direction: row;
    padding: ${({ theme }) => theme.padding};
+
+   .leftSide {
+       width: 150px;
+       text-align: right;
+       padding-right: ${({ theme }) => theme.padding};
+   }
 `;
 
 export default class WidgetThemes extends WidgetComponent {
@@ -221,12 +152,7 @@ export default class WidgetThemes extends WidgetComponent {
             <WidgetBasicWrap>
                 <h1>Themes</h1>
                 <OptionBox style={{ border: 'none' }}>
-                    <div style={{
-                        padding: 7,
-                        paddingRight: 15,
-                        width: 150,
-                        textAlign: 'right'
-                    }}>
+                    <div className='leftSide'>
                         {(this.state.useDarkTheme) ? 'Light' : 'Main'} theme:
                     </div>
                     <div style={{ flex: 1 }}>
@@ -244,11 +170,11 @@ export default class WidgetThemes extends WidgetComponent {
                 </OptionBox>
 
                 <OptionBox>
-                    <div style={{ width: 150 }}>
-                        <div style={{ float: 'left', paddingTop: 7 }}>
+                    <div className='leftSide'>
+                        <div style={{ float: 'left' }}>
                             <Checkbox checked={this.state.useDarkTheme} onChange={this.toggleUseDarkTheme} />
                         </div>
-                        <div style={{ float: "right", paddingTop: 9, paddingRight: 15, opacity: this.state.useDarkTheme ? 1 : 0.25 }}>Dark theme:</div>
+                        <div style={{ float: "right", opacity: this.state.useDarkTheme ? 1 : 0.25 }}>Dark theme:</div>
                     </div>
                     <div style={{ flex: 1 }}>
                         <Select style={{ width: '100%' }}
@@ -365,24 +291,3 @@ class ThemeConfigurator extends React.Component<{ onChange?: (e?: any) => void, 
     }
 }
 
-
-// function Test() {
-//     return <div>
-//         {this.state.themes.map((theme, index) => {
-//             return <ThemeBox key={index}
-//                 onClick={() => {
-//                     this.setState({ activethemename: theme.name })
-//                     api.emit('themeChange', theme.name);
-//                 }}
-//             >   <ThemeColorBarBox>
-//                     <ThemeColorBar style={{ background: theme.focusColor }} />
-//                     <ThemeColorBar style={{ background: theme.body }} />
-//                     <ThemeColorBar style={{ background: theme.bodyAlt }} />
-//                     <ThemeColorBar style={{ background: theme.bodyAltLighter }} />
-//                     <ThemeColorBar style={{ background: theme.text }} />
-//                 </ThemeColorBarBox>
-//                 <div>{theme.name} {(this.state.activethemename === theme.name) && 'active'} </div>
-//             </ThemeBox>
-//         })}
-//     </div>
-// }

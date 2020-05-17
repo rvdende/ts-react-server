@@ -30,10 +30,9 @@ const ButtonStyled = styled.button<ButtonStyleProps>`
   background: ${({ theme }) => theme.body};
   border-radius: ${({ theme }) => theme.radius};
   margin: 0px;
-  padding: 3px;
+  padding: ${({ theme }) => theme.padding} ${({ theme }) => parseInt(theme.padding, 10) * 2};
   font-size: 15px;
   font-weight: bold;
-  height: 40px;
   color: ${({ theme }) => theme.text};
   white-space: nowrap;
   transition: all 0.15s linear;
@@ -78,7 +77,7 @@ const ButtonStyled = styled.button<ButtonStyleProps>`
 
   div.buttonText {
     flex:1;
-      padding: 5px 12px;
+      padding: ${({ theme }) => theme.padding};
   }
 `
 

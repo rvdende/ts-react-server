@@ -2,18 +2,16 @@ import styled from 'styled-components';
 
 export const Input = styled.input`
   background: ${({ theme }) => theme.body};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.radius};
   border: none;
   margin: 0px;
-  padding: 6px 12px;
+  padding: ${({ theme }) => theme.padding};
   font-size: 15px;
   font-weight: bold;
-  height: 40px;
   color: ${({ theme }) => theme.text};
   white-space: nowrap;
   border: 2px solid  ${({ theme }) => theme.bodyAlt};
   outline:0;
-
   width: 100%;
 
   &[type=number]::-webkit-inner-spin-button {

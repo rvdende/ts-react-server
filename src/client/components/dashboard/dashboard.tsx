@@ -444,6 +444,7 @@ class Dashboard extends React.Component<Props, State> {
                     <ResponsiveReactGridLayout
                         {...this.options}
                         onLayoutChange={(layout) => { }}
+                        margin={[2, 2]}
                         layouts={layouts}
                         onBreakpointChange={this.onBreakpointChange}
                         measureBeforeMount={false}

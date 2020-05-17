@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 export const Select = styled.select`
   background: ${({ theme }) => theme.body};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.radius};
   border: none;
   margin: 0px;
-  padding: 6px 12px;
+  padding: ${({ theme }) => theme.padding};
   font-size: 15px;
   font-weight: bold;
-  height: 40px;
   color: ${({ theme }) => theme.text};
   white-space: nowrap;
   transition: all 0.15s linear;

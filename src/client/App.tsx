@@ -67,7 +67,7 @@ class App extends React.Component<Props, State> {
         if (this.state.dashboardState) {
 
             return (
-                <div style={{ padding: 15 }}>
+                <div>
                     <ThemeProvider theme={this.state.theme}>
                         <GlobalStyles />
                         <BrowserRouter>
