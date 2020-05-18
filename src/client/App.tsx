@@ -7,7 +7,6 @@ import { api } from './api'
 import { ThemeProvider } from 'styled-components';
 import { themeList, ThemeDefinition, GlobalStyles } from "./theme";
 import history from './utils/history';
-import Threed from './components/threed';
 import Dashboard from './components/dashboard/dashboard';
 import { dashboardService } from './components/dashboard/dashboardService';
 import { DashboardState } from './components/dashboard/interfaces';

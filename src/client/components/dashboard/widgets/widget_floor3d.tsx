@@ -6,11 +6,12 @@ import { Input } from '../input';
 import { Button } from '../button';
 import { clone } from '../dashboard';
 import { Canvas, useFrame, useThree } from 'react-three-fiber'
-import { HTML, OrbitControls, StandardEffects } from 'drei';
+import { HTML, OrbitControls, StandardEffects, PerspectiveCamera } from 'drei';
 import { Person3D, PersonLoc } from '../../floor3d/person3d';
 import { Floor3D } from '../../floor3d/floor';
 import * as THREE from 'three'
 import { useSprings, a } from 'react-spring/three'
+import { Vector3 } from 'three';
 
 const WidgetBasicWrap = styled.div`
     height: 100%;
@@ -45,8 +46,6 @@ interface Floor3DState extends WidgetState {
     scenedata: { people: PersonLoc[] }
 }
 
-const RectAreaLight = ({ lookAt = [0, 0, 0], ...props }) => <rectAreaLight {...props} onUpdate={self => self.lookAt(...lookAt)} />
-
 export default class Widget3DFloor extends WidgetComponent {
     state: Floor3DState = {
         options: {
@@ -55,7 +54,7 @@ export default class Widget3DFloor extends WidgetComponent {
         },
         inputmessage: '',
         log: [],
-        scenedata: { people: [{ id: 'A1', x: 0, y: 1 }, { id: 'B2', x: 0, y: 0 }] }
+        scenedata: { people: [{ id: 'A1', x: 2, y: 1 }, { id: 'B2', x: 3, y: 1 }] }
     }
 
     interval: any;
@@ -88,12 +87,14 @@ export default class Widget3DFloor extends WidgetComponent {
 
         return (
             <WidgetBasicWrap>
-                <Canvas shadowMap onCreated={({ gl, scene }) => {
-                    scene.background = new THREE.Color('#efefef')
-                    scene.rotation.set(-Math.PI / 4, 0, -Math.PI / 4)
-                    gl.shadowMap.enabled = true
-                    gl.shadowMap.type = THREE.PCFSoftShadowMap
-                }}>
+                <Canvas
+                    camera={{ position: [-4, 4, 5] }}
+                    shadowMap onCreated={({ gl, scene }) => {
+                        scene.background = new THREE.Color('#efefef')
+                        scene.rotation.set(-Math.PI / 2, 0, -Math.PI / 2)
+                        gl.shadowMap.enabled = true
+                        gl.shadowMap.type = THREE.PCFSoftShadowMap
+                    }}>
 
                     <ambientLight />
                     <spotLight
@@ -126,7 +127,10 @@ export default class Widget3DFloor extends WidgetComponent {
                     <Suspense fallback={null}>
                         <StandardEffects bloom={{ luminanceThreshold: 0.99 }} />
                     </Suspense>
-                    <OrbitControls />
+
+                    <OrbitControls target={new Vector3(0, 0, 0)} onUpdate={(e) => {
+                        console.log(e);
+                    }} />
 
                 </Canvas>
             </WidgetBasicWrap>
