@@ -1,9 +1,14 @@
 import React, { useRef } from 'react';
-import { Canvas, useFrame, useThree } from 'react-three-fiber'
+import { extend, Canvas, useFrame, useThree } from 'react-three-fiber'
 import { HTML, OrbitControls } from 'drei';
 import { defaults3d } from './defaults';
 import lodash from 'lodash'
 import { Vector3, Vector2, LatheGeometry, Geometry } from 'three';
+
+import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'threejs-meshline'
+
+extend({ MeshLine, MeshLineMaterial })
+
 export interface PersonLoc {
     id: any,
     x: number
@@ -19,7 +24,9 @@ interface Props {
 export class Person3D extends React.Component<Props, {}> {
     state = {
         position: [0, 0, 0],
-        positionTarget: [2, 2, 0]
+        positionTarget: [2, 2, 0],
+        history: [],
+        firstSet: false
     }
 
     anim: any; // interval
@@ -29,15 +36,32 @@ export class Person3D extends React.Component<Props, {}> {
             let { position, positionTarget } = this.state;
 
             if (!lodash.isEqual(position, positionTarget)) {
-                position = [
-                    this.moveTowards(position[0], positionTarget[0]),
-                    this.moveTowards(position[1], positionTarget[1]),
-                    this.moveTowards(position[2], positionTarget[2])
-                ]
-                this.setState({ position })
+
+                // position = [
+                //     this.moveTowards(position[0], positionTarget[0]),
+                //     this.moveTowards(position[1], positionTarget[1]),
+                //     this.moveTowards(position[2], positionTarget[2])
+                // ]
+
+                let positionVec = new Vector3(position[0], position[1], position[2])
+                let positionTargetVec = new Vector3(positionTarget[0], positionTarget[1], positionTarget[2])
+
+                let directionVec = positionTargetVec.sub(positionVec)
+
+                let distance = directionVec.length();
+
+                if (distance < 1) {
+                    directionVec.normalize().multiplyScalar(distance);
+                } else {
+                    directionVec.normalize().multiplyScalar(0.5);
+                }
+
+                positionVec.add(directionVec)
+
+                this.setState({ position: positionVec.toArray() })
             }
 
-        }, 50)
+        }, 1000 / 60)
     }
 
     componentWillUnmount() {
@@ -49,7 +73,16 @@ export class Person3D extends React.Component<Props, {}> {
         if (p.position) {
             let res = lodash.isEqual(p.position, this.state.positionTarget)
             if (res === false) {
-                this.setState({ positionTarget: p.position })
+                let history = this.state.history
+                history.push(p.position)
+
+                let newUpdate: any = { positionTarget: p.position, history }
+                if (this.state.firstSet === false) {
+                    newUpdate.position = p.position
+                    newUpdate.firstSet = true;
+                }
+
+                this.setState(newUpdate)
             }
         }
     }
@@ -66,7 +99,26 @@ export class Person3D extends React.Component<Props, {}> {
 
 
     render() {
-        //const geometry = new THREE.LatheBufferGeometry(points);
+        let position = new Vector3(this.state.position[0], this.state.position[1], this.state.position[2]);
+        // Person history line
+        // const vertices = []
+        // for (let j = 0; j < 100; ++j)
+        //     vertices.push(new Vector3(j / 10, 0, 0))
+
+
+        const vertices = []
+        for (let j = 0; j < this.state.history.length; ++j) {
+            if (j == this.state.history.length - 1) {
+
+            } else {
+                vertices.push(new Vector3(this.state.history[j][0], this.state.history[j][1], this.state.history[j][2]))
+            }
+        }
+        vertices.push(position)
+        // for (let j = 0; j <= Math.PI * 2; j += (2 * Math.PI) / 64)
+        //     vertices.push(new Vector3(Math.cos(j), Math.sin(j), 0))
+
+        // Person body curve
         const points: Vector2[] = [];
         for (let i = 0; i < 10; ++i) {
             let scale = 0.1;
@@ -77,8 +129,19 @@ export class Person3D extends React.Component<Props, {}> {
             ));
         }
 
-        let position = new Vector3(this.state.position[0], this.state.position[1], this.state.position[2]);
+
         return <>
+
+            <mesh position={[0, 0, 0.1]} {...defaults3d} >
+                <meshLine attach="geometry" vertices={vertices} />
+                <meshLineMaterial
+                    attach="material"
+                    transparent
+                    depthTest={true}
+                    lineWidth={.1}
+                    color={this.props.color}
+                />
+            </mesh>
             <group position={position}  {...defaults3d}>
 
                 <mesh position={[0, 0, 1.4]} {...defaults3d}>
