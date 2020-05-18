@@ -47,10 +47,11 @@ interface Floor3DState extends WidgetState {
 }
 
 export default class Widget3DFloor extends WidgetComponent {
-    state: Floor3DState = {
+    state: any = {
         options: {
             someval: { type: 'input', default: 'foo', value: undefined },
-            textcol: { type: 'color', default: 'foo', value: undefined }
+            textcol: { type: 'color', default: 'foo', value: undefined },
+            personIcon: { type: 'color', default: '#999999', value: undefined }
         },
         inputmessage: '',
         log: [],
@@ -105,13 +106,18 @@ export default class Widget3DFloor extends WidgetComponent {
                         castShadow={true}
                     />
 
-                    <Floor3D size={[10, 10]} color='#343789' position={[0, 0, 0.1]} />
+                    <Floor3D size={[20, 20]} color='#343789' position={[0, 0, -0.00001]} />
 
                     <Floor3D size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} />
 
 
                     {this.state.scenedata.people.map((person, i) => {
-                        return <Person3D key={i} person={person} position={[person.x, person.y, 0.9]} />
+                        return <Person3D
+                            color={this.state.options.personIcon.value}
+                            key={i}
+                            person={person}
+                            position={[person.x, person.y, 0]}
+                        />
                     })}
 
                     <Suspense fallback={null}>

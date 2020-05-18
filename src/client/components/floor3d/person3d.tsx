@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from 'react-three-fiber'
 import { HTML, OrbitControls } from 'drei';
 import { defaults3d } from './defaults';
 import lodash from 'lodash'
+import { Vector3, Vector2, LatheGeometry, Geometry } from 'three';
 export interface PersonLoc {
     id: any,
     x: number
@@ -12,6 +13,7 @@ export interface PersonLoc {
 interface Props {
     person: PersonLoc
     position: [number, number, number?]
+    color?: string
 }
 
 export class Person3D extends React.Component<Props, {}> {
@@ -42,7 +44,7 @@ export class Person3D extends React.Component<Props, {}> {
         clearInterval(this.anim);
     }
 
-    componentDidUpdate = (p, s) => {
+    componentDidUpdate = (p: any, s: any) => {
         // console.log(p, s)
         if (p.position) {
             let res = lodash.isEqual(p.position, this.state.positionTarget)
@@ -59,31 +61,76 @@ export class Person3D extends React.Component<Props, {}> {
         return target;
     }
 
-    render() {
-        return <mesh position={this.state.position} {...defaults3d}  >
-            <boxBufferGeometry attach="geometry" args={[0.30, 0.60, 1.5]} />
-            <meshPhysicalMaterial attach="material" color="gray" />
-            <HTML>
-                <div style={{
-                    position: 'relative',
-                    width: 0, height: 0
-                }}>
-                    <div
-                        style={{
-                            color: 'white',
-                            background: 'rgba(0,0,0,0.25)',
-                            fontSize: 20,
-                            padding: '2px 4px',
-                            borderRadius: 3,
-                            position: 'absolute',
-                            textAlign: 'center',
-                            left: -8
-                        }}>
-                        {this.props.person.id}
-                    </div>
 
-                </div>
-            </HTML>
-        </mesh>
+
+
+
+    render() {
+        //const geometry = new THREE.LatheBufferGeometry(points);
+        const points: Vector2[] = [];
+        for (let i = 0; i < 10; ++i) {
+            let scale = 0.1;
+
+            points.push(new Vector2(
+                (Math.sin(i * 0.25) * 2.5 + 1) * scale,
+                ((i - 5) * 1.5) * scale
+            ));
+        }
+
+        let position = new Vector3(this.state.position[0], this.state.position[1], this.state.position[2]);
+        return <>
+            <group position={position}  {...defaults3d}>
+
+                <mesh position={[0, 0, 1.4]} {...defaults3d}>
+                    <octahedronBufferGeometry attach="geometry" args={[.3, 2]} {...defaults3d} />
+                    <meshPhongMaterial attach="material" color={this.props.color} />
+                </mesh>
+
+                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0.5]} {...defaults3d}>
+                    <latheBufferGeometry attach="geometry" args={[points]} {...defaults3d} />
+                    <meshPhysicalMaterial attach="material" color={this.props.color} />
+                </mesh>
+
+
+
+                <HTML position={[0, 0, 1.4]}>
+
+                    <div style={{
+                        width: 0,
+                        height: 0,
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        color: 'white',
+                    }}>
+                        <div style={{
+                            textAlign: 'center',
+                            width: 200,
+                            bottom: 0,
+                            left: -100,
+                            position: 'absolute',
+                            fontSize: '15px',
+                            lineHeight: '10px',
+                            color: 'white',
+                            display: 'flex',
+                            flexDirection: 'row'
+                        }}>
+                            <div style={{ flex: 1 }} />
+                            <div style={{
+                                flex: 0,
+                                background: 'rgba(0,0,0,0.5)',
+                                padding: 4,
+                                borderRadius: 4
+                            }}>{this.props.person.id}</div>
+                            <div style={{ flex: 1 }} />
+                        </div>
+
+
+
+                    </div>
+                </HTML>
+
+            </group>
+        </>
     }
 }
