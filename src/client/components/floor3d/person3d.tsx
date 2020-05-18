@@ -107,8 +107,8 @@ export class Person3D extends React.Component<Props, {}> {
 
         const vertices = []
 
-        vertices.push(new Vector3(0, 0, 0))
-        vertices.push(new Vector3(1, 1, 1))
+        // vertices.push(new Vector3(0, 0, 0))
+        // vertices.push(new Vector3(1, 1, 1))
 
         for (let j = 0; j < this.state.history.length; ++j) {
             if (j == this.state.history.length - 1) {

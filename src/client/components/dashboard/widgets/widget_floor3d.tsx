@@ -12,6 +12,7 @@ import { Floor3D } from '../../floor3d/floor';
 import * as THREE from 'three'
 import { useSprings, a } from 'react-spring/three'
 import { Vector3 } from 'three';
+import { Image } from '../../floor3d/image3d'
 
 const WidgetBasicWrap = styled.div`
     height: 100%;
@@ -84,31 +85,54 @@ export default class Widget3DFloor extends WidgetComponent {
     render() {
         const d = 8.25
 
+        // const image = 'https://images.unsplash.com/photo-1517462964-21fdcec3f25b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
+        const image = 'http://localhost:8080/floor_transparent2.png'
+
         return (
             <WidgetBasicWrap>
                 <Canvas shadowMap
                     camera={{ position: [-4, 4, 5] }}
                     onCreated={({ gl, scene }) => {
-                        scene.background = new THREE.Color('#efefef')
+                        scene.background = new THREE.Color('#656565')
                         scene.rotation.set(-Math.PI / 2, 0, -Math.PI / 2)
                         gl.shadowMap.enabled = true
                         gl.shadowMap.type = THREE.PCFSoftShadowMap
+
                     }}>
 
-                    <ambientLight />
+                    <ambientLight intensity={.75} />
                     <spotLight
-                        angle={Math.PI / 3}
-                        intensity={1}
-                        position={[10, 10, 15]}
+                        angle={Math.PI / 2}
+                        intensity={0.75}
+                        position={[15, -15, 25]}
+                        rotation={[0, 0, 0]}
                         shadow-bias={-0.00005}
                         shadow-mapSize-width={4096}
                         shadow-mapSize-height={4096}
                         castShadow={true}
                     />
 
-                    <Floor3D size={[20, 20]} color='#343789' position={[0, 0, -0.00001]} />
 
-                    <Floor3D size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} />
+                    <directionalLight
+                        shadow-bias={-0.00005}
+                        intensity={0.1}
+                        position={[15, -15, 25]}
+                        shadow-mapSize-width={4096}
+                        shadow-mapSize-height={4096}
+                        castShadow={true}
+                    />
+
+                    {/* <Floor3D size={[.25, 2]} color='#ffffff' position={[0, 0, 3]} /> */}
+
+                    {/* <Floor3D size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} /> */}
+
+                    {/* {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n, i) => {
+                        return <><Image url={image} size={[1920 / 25, 1080 / 25]} position={[0, 0, n * 8]} />
+                            <HTML position={[30, -15, 1 + (n * 8)]}><h1 style={{ fontSize: 40, color: 'rgba(255,255,255,0.5)' }}>{n}</h1></HTML></>
+                    })} */}
+
+                    <Image url={image} size={[1920 / 25, 1080 / 25]} />
+
 
 
                     {this.state.scenedata.people.map((person, i) => {
