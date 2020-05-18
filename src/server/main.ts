@@ -44,6 +44,15 @@ function startServer(db: mongojs.db) {
     app.use(require("webpack-hot-middleware")(compiler));
     app.use(express.json({ limit: '10mb' }));
 
+    /// FLOOR 3D people
+
+    app.post('/nodeapi/scenedata', (req, res) => {
+        wss.send(JSON.stringify({ type: 'scenedata', data: req.body }))
+        res.json({ result: 'success' })
+    })
+
+    ///
+
     app.post('/nodeapi/prototype/data/post', (req, res) => {
         wss.send(JSON.stringify(req.body));
         res.json({ result: 'success' })

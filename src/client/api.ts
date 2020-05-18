@@ -22,6 +22,12 @@ class API extends EventEmitter {
 
         this.ws.onmessage = (event) => {
             console.log('message recv', event.data)
+            if (isJson(event.data)) {
+                let data = JSON.parse(event.data);
+                if (data.type === 'scenedata') {
+                    this.emit('scenedata', data)
+                }
+            };
             this.emit('socket', event.data)
         }
 
@@ -79,4 +85,13 @@ interface User {
 interface Address {
     street: string
     code: number
+}
+
+export function isJson(str: string) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }
