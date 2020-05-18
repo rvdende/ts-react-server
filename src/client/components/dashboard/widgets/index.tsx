@@ -7,5 +7,6 @@ export { default as chat } from './widget_chat'
 export { default as text } from './widget_text'
 export { default as json } from './widget_json'
 export { default as floor3d } from './widget_floor3d'
+export { default as spring } from './widget_spring'
 // todo: code widget works, but needs lazy loading else the file is too big
 // export { default as code } from './widget_code'

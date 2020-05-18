@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { WidgetComponent, WidgetState } from './widgetcomponent'
 import styled from 'styled-components';
 import { api } from '../../../api';
@@ -6,7 +6,7 @@ import { Input } from '../input';
 import { Button } from '../button';
 import { clone } from '../dashboard';
 import { Canvas, useFrame, useThree } from 'react-three-fiber'
-import { HTML, OrbitControls } from 'drei';
+import { HTML, OrbitControls, StandardEffects } from 'drei';
 import { Person3D, PersonLoc } from '../../floor3d/person3d';
 import { Floor3D } from '../../floor3d/floor';
 import * as THREE from 'three'
@@ -95,23 +95,37 @@ export default class Widget3DFloor extends WidgetComponent {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
                 }}>
 
-                    <ambientLight intensity={0.5} />
+                    <ambientLight />
                     <spotLight
                         angle={Math.PI / 3}
                         intensity={1}
                         position={[10, 10, 15]}
+                        shadow-bias={-0.00005}
                         shadow-mapSize-width={2048}
                         shadow-mapSize-height={2048}
                         castShadow={true}
                     />
 
-                    <Floor3D receiveShadow size={[1000, 1000]} />
+                    <Floor3D
+                        receiveShadow
+                        castShadow
+                        size={[10, 10]} color='#708090' position={[0, 0, 0.1]} />
+
+                    <Floor3D
+                        receiveShadow
+                        castShadow
+                        size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} />
+
 
                     {this.state.scenedata.people.map((person, i) => {
                         return <Person3D receiveShadow castShadow key={i}
                             person={person}
                             position={[person.x, person.y, 0.8]} />
                     })}
+
+                    <Suspense fallback={null}>
+                        <StandardEffects bloom={{ luminanceThreshold: 0.99 }} />
+                    </Suspense>
                     <OrbitControls />
 
                 </Canvas>
