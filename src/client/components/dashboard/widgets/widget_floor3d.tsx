@@ -124,9 +124,7 @@ export default class Widget3DFloor extends WidgetComponent {
                         <StandardEffects bloom={{ luminanceThreshold: 0.99 }} />
                     </Suspense>
 
-                    <OrbitControls target={new Vector3(0, 0, 0)} onUpdate={(e) => {
-                        console.log(e);
-                    }} />
+                    <OrbitControls />
 
                 </Canvas>
             </WidgetBasicWrap>

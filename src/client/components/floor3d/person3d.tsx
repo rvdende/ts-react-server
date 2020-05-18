@@ -6,7 +6,6 @@ import lodash from 'lodash'
 import { Vector3, Vector2, LatheGeometry, Geometry } from 'three';
 
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'threejs-meshline'
-
 extend({ MeshLine, MeshLineMaterial })
 
 export interface PersonLoc {
@@ -107,6 +106,10 @@ export class Person3D extends React.Component<Props, {}> {
 
 
         const vertices = []
+
+        vertices.push(new Vector3(0, 0, 0))
+        vertices.push(new Vector3(1, 1, 1))
+
         for (let j = 0; j < this.state.history.length; ++j) {
             if (j == this.state.history.length - 1) {
 
@@ -136,9 +139,10 @@ export class Person3D extends React.Component<Props, {}> {
                 <meshLine attach="geometry" vertices={vertices} />
                 <meshLineMaterial
                     attach="material"
-                    transparent
+                    transparent={true}
                     depthTest={true}
-                    lineWidth={.1}
+                    lineWidth={.25}
+                    opacity={0.5}
                     color={this.props.color}
                 />
             </mesh>
