@@ -71,8 +71,6 @@ export default class Widget3DFloor extends WidgetComponent {
 
         if (incomingdata.type === 'scenedata') {
             let scenedata = incomingdata.data;
-            console.log(scenedata);
-
             this.setState({ scenedata });
         }
         // let scenedata = clone(this.state.scenedata);
@@ -87,9 +85,9 @@ export default class Widget3DFloor extends WidgetComponent {
 
         return (
             <WidgetBasicWrap>
-                <Canvas
+                <Canvas shadowMap
                     camera={{ position: [-4, 4, 5] }}
-                    shadowMap onCreated={({ gl, scene }) => {
+                    onCreated={({ gl, scene }) => {
                         scene.background = new THREE.Color('#efefef')
                         scene.rotation.set(-Math.PI / 2, 0, -Math.PI / 2)
                         gl.shadowMap.enabled = true
@@ -102,26 +100,18 @@ export default class Widget3DFloor extends WidgetComponent {
                         intensity={1}
                         position={[10, 10, 15]}
                         shadow-bias={-0.00005}
-                        shadow-mapSize-width={2048}
-                        shadow-mapSize-height={2048}
+                        shadow-mapSize-width={4096}
+                        shadow-mapSize-height={4096}
                         castShadow={true}
                     />
 
-                    <Floor3D
-                        receiveShadow
-                        castShadow
-                        size={[10, 10]} color='#708090' position={[0, 0, 0.1]} />
+                    <Floor3D size={[10, 10]} color='#343789' position={[0, 0, 0.1]} />
 
-                    <Floor3D
-                        receiveShadow
-                        castShadow
-                        size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} />
+                    <Floor3D size={[1000, 1000]} color='#787878' position={[0, 0, -.1]} />
 
 
                     {this.state.scenedata.people.map((person, i) => {
-                        return <Person3D receiveShadow castShadow key={i}
-                            person={person}
-                            position={[person.x, person.y, 0.8]} />
+                        return <Person3D key={i} person={person} position={[person.x, person.y, 0.9]} />
                     })}
 
                     <Suspense fallback={null}>
