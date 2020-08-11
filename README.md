@@ -16,8 +16,6 @@ Install the dependencies
 npm install
 ```
 
-Then in 3 seperate terminals run:
-
 Build and run the dev server
 ```
 npm run dev
