@@ -11,66 +11,6 @@ export class GeoImage extends React.Component {
         convolute: 0
     }
 
-    // ctx: CanvasRenderingContext2D;
-    // imgdata: ImageData;
-
-    // componentDidMount() {
-    //     let canvasRef: any = this.refs.canvas;
-    //     let canvas: HTMLCanvasElement = canvasRef
-    //     this.ctx = canvas.getContext("2d")
-
-    //     let imgRef: any = this.refs.image;
-    //     const img: HTMLImageElement = imgRef;
-
-    //     img.onload = () => {
-    //         this.ctx.drawImage(img, 0, 0)
-    //         this.imgdata = this.ctx.getImageData(0, 0, 800, 800);
-    //         console.log(this.imgdata);
-    //         this.ctx.font = '12px Verdana';
-    //         this.ctx.fillStyle = "#cccccc";
-    //         this.ctx.fillText('AntarcticaRockSurface.jpg', 10, 20);
-
-    //         // let processed = this.grayscale(imgdata);
-    //         // for (var a = 0; a < 500 * 500 * 4; a++) {
-    //         //     imgdata.data[a] = Math.random() * 255
-    //         // }
-    //         let processed = this.grayscale(this.imgdata);
-    //         this.ctx.putImageData(processed, 0, 0);
-
-
-    //     }
-    // }
-
-    // componentDidUpdate = () => {
-    //     console.log('update')
-    //     this.updateCanvas();
-    // }
-
-    // updateCanvas = () => {
-    //     if (!this.ctx) return;
-    //     if (!this.imgdata) return;
-    //     let processed = this.grayscale(this.imgdata);
-    //     console.log('putting processed data', processed.data[2560000 / 2]);
-    //     this.ctx.putImageData(processed, 0, 0);
-    // }
-
-    // grayscale = (pixels: ImageData) => {
-    //     var d = pixels.data;
-    //     for (var i = 0; i < d.length; i += 4) {
-    //         var r = d[i];
-    //         var g = d[i + 1];
-    //         var b = d[i + 2];
-    //         // CIE luminance for the RGB
-    //         // The human eye is bad at seeing red and blue, so we de-emphasize them.
-    //         var grayval = (r + g + b) / 3;
-    //         d[i] = (d[i] * (1 - this.state.grayscale)) + (grayval * this.state.grayscale)
-    //         d[i + 1] = (d[i + 1] * (1 - this.state.grayscale)) + (grayval * this.state.grayscale)
-    //         d[i + 2] = (d[i + 2] * (1 - this.state.grayscale)) + (grayval * this.state.grayscale)
-
-    //     }
-    //     return pixels;
-    // };
-
     render() {
         return <div style={{ display: 'flex', flexDirection: 'row' }}>
 
@@ -273,29 +213,17 @@ function CanvasGeo(props: any) {
         return pixelinput;
     };
 
-    // function handleCanvasClick(e: any) {
-    //     const newLocation = { x: e.clientX, y: e.clientY }
-    //     setLocations([...locations, newLocation])
-    // }
 
-    // function handleClear() {
-    //     setLocations([])
-    // }
-    // function handleUndo() {
-    //     setLocations(locations.slice(0, -1))
-    // }
     return (
         <>
             <img ref={imageRef}
                 src='./AntarcticaRockSurface.jpg'
                 className="hidden" style={{ display: 'none' }} />
-            {/* <button onClick={handleClear}>Clear</button>
-            <button onClick={handleUndo}>Undo</button> */}
+
             <canvas
                 ref={canvasRef}
                 width={window.innerWidth}
                 height={window.innerHeight}
-                // onClick={handleCanvasClick}
                 {...props}
             />
         </>
