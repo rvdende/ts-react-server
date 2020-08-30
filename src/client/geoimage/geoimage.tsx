@@ -72,13 +72,16 @@ export class GeoImage extends React.Component {
     // };
 
     render() {
-        return <div>
-            <h1>Geo Image Processor</h1>
-            <h4>by Rouan van der Ende</h4>
-            <h6>version 1</h6>
+        return <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-            <div>
-                Controls:
+
+            <div style={{ width: 400, background: 'rgba(0,0,0,0.1)', padding: 20 }}>
+
+                <h1>Geo Image Processor</h1>
+                <h4>by Rouan van der Ende</h4>
+                <h6>version 1</h6>
+                <br />
+                <h4>Controls:</h4>
 
                 <table>
                     <tbody>
