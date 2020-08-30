@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "watchserver": "tsc -w src/server/main.ts --outDir ./build",
-    "dev": "tsc -w src/server/main.ts && nodemon src/server/main.js "
+    "dev": "tsc -w src/server/main.ts --outDir ./build"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",

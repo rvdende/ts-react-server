@@ -10,6 +10,7 @@ import history from './utils/history';
 import Dashboard from './components/dashboard/dashboard';
 import { dashboardService } from './components/dashboard/dashboardService';
 import { DashboardState } from './components/dashboard/interfaces';
+import { GeoImage } from './geoimage/geoimage';
 
 interface Props { }
 interface State {
@@ -30,9 +31,6 @@ class App extends React.Component<Props, State> {
     }
 
 
-    constructor(props: any) {
-        super(props)
-    }
 
     componentDidMount() {
         api.test();
@@ -48,13 +46,13 @@ class App extends React.Component<Props, State> {
 
         })
 
-        api.loadThemes((themes) => {
-            this.setState({ theme: themes.mainTheme })
-        })
+        // api.loadThemes((themes) => {
+        //     this.setState({ theme: themes.mainTheme })
+        // })
 
-        api.on('theme', (theme) => {
-            this.setState({ theme })
-        })
+        // api.on('theme', (theme) => {
+        //     this.setState({ theme })
+        // })
     }
 
 
@@ -70,12 +68,10 @@ class App extends React.Component<Props, State> {
                     <ThemeProvider theme={this.state.theme}>
                         <GlobalStyles />
                         <BrowserRouter>
-                            <Dashboard state={this.state.dashboardState} editMode={true} />
-
                             <Switch>
                                 <Route exact path="/">
-                                    <div>
-                                        home
+                                    <div style={{ padding: 20, margin: 0 }}>
+                                        <GeoImage />
                                     </div>
                                 </Route>
                                 <Route exact path="/test">

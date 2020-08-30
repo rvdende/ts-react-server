@@ -96,6 +96,7 @@ export const GlobalStyles = createGlobalStyle`
 
   #app {
     overflow: visible;
+    margin: 0;padding:0;
   }
 
   a {
@@ -122,4 +123,10 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0px;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     /* transition: all 0.25s linear; */
-  }`
+  }
+  
+  h1,h2,h3,h4,h5,h6 {
+    padding:0;
+    margin:0;
+  }
+  `
